@@ -2,7 +2,7 @@ package by.htp.library.entity.users;
 
 public class Reader extends AbstractUser {
 
-	private int login;
+	private int readerTicketNumber;
 	private String firstName;
 	private String lastName;
 	private int phoneNumber;
@@ -13,7 +13,7 @@ public class Reader extends AbstractUser {
 
 	public Reader(String password, int login, String firstName, String lastName, int phoneNumber) {
 		super(password);
-		this.login = login;
+		this.readerTicketNumber = login;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
@@ -21,18 +21,18 @@ public class Reader extends AbstractUser {
 
 	public Reader(int login, String firstName, String lastName, int phoneNumber) {
 		super();
-		this.login = login;
+		this.readerTicketNumber = login;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
 	}
 
-	public int getLogin() {
-		return login;
+	public int getReaderTicketNumber() {
+		return readerTicketNumber;
 	}
 
-	public void setLogin(int login) {
-		this.login = login;
+	public void setReaderTicketNumber(int readerTicketNumber) {
+		this.readerTicketNumber = readerTicketNumber;
 	}
 
 	public String getFirstName() {
@@ -65,7 +65,7 @@ public class Reader extends AbstractUser {
 		int result = super.hashCode();
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + login;
+		result = prime * result + readerTicketNumber;
 		result = prime * result + phoneNumber;
 		return result;
 	}
@@ -89,7 +89,7 @@ public class Reader extends AbstractUser {
 				return false;
 		} else if (!lastName.equals(other.lastName))
 			return false;
-		if (login != other.login)
+		if (readerTicketNumber != other.readerTicketNumber)
 			return false;
 		if (phoneNumber != other.phoneNumber)
 			return false;
@@ -98,10 +98,8 @@ public class Reader extends AbstractUser {
 
 	@Override
 	public String toString() {
-		return "Reader [login=" + login + ", firstName=" + firstName + ", lastName=" + lastName + ", phoneNumber="
-				+ phoneNumber + "]";
+		return "Reader [readerTicketNumber=" + readerTicketNumber + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", phoneNumber=" + phoneNumber + "]";
 	}
-	
-	
 
 }

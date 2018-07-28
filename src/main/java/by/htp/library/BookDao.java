@@ -5,6 +5,7 @@ import java.util.List;
 import by.htp.library.entity.Book;
 
 public interface BookDao {
+	
 	Book read(int id);
 
 	List<Book> list();
