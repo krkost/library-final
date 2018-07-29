@@ -2,7 +2,7 @@ package by.htp.library;
 
 import java.util.List;
 
-import by.htp.library.entity.users.Reader;
+import by.htp.library.entity.user.Reader;
 
 public interface ReaderDao {
 	

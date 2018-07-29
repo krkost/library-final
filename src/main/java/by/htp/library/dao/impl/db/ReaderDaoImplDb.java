@@ -1,11 +1,11 @@
-package by.htp.library.dao.impl;
+package by.htp.library.dao.impl.db;
 
 import java.util.List;
 
 import by.htp.library.ReaderDao;
-import by.htp.library.entity.users.Reader;
+import by.htp.library.entity.user.Reader;
 
-public class ReaderDaoImpl implements ReaderDao{
+public class ReaderDaoImplDb implements ReaderDao{
 
 	@Override
 	public Reader read(int readerTicketNumber) {

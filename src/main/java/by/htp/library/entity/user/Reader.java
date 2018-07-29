@@ -1,4 +1,4 @@
-package by.htp.library.entity.users;
+package by.htp.library.entity.user;
 
 public class Reader extends AbstractUser {
 

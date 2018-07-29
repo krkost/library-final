@@ -1,4 +1,4 @@
-package by.htp.library.entity.users;
+package by.htp.library.entity.user;
 
 public abstract class AbstractUser {
 	private String password;
