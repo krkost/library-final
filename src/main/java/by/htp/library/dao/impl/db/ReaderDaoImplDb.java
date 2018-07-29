@@ -1,5 +1,12 @@
 package by.htp.library.dao.impl.db;
 
+import static by.htp.library.dao.util.MySqlPropertyManager.getLogin;
+import static by.htp.library.dao.util.MySqlPropertyManager.getPass;
+import static by.htp.library.dao.util.MySqlPropertyManager.getUrl;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -8,30 +15,49 @@ import by.htp.library.ReaderDao;
 import by.htp.library.entity.Book;
 import by.htp.library.entity.user.Reader;
 
-public class ReaderDaoImplDb implements ReaderDao{
+public class ReaderDaoImplDb implements ReaderDao {
+
+	private static final String SELECT_READER_BYID = "SELECT * from reader WHERE readerTicketNumber = ?";
+	private static final String SELECT_READERS_LIST = "SELECT * FROM reader";
+	private static final String ADD_READER = "INSERT INTO reader (readerTicketNumber, firstName, lastName, phoneNumber, password) VALUES (?, ?, ?, ?, ?)";
+	private static final String DELETE_READER_BYID = "DELETE FROM reader WHERE readerTicketNumber = ?";
 
 	@Override
 	public Reader read(int readerTicketNumber) {
-		
+
 		return null;
 	}
 
 	@Override
 	public List<Reader> list() {
-		
+
 		return null;
 	}
 
 	@Override
 	public int add(Reader reader) {
-		
-		return 0;
+		int result = 0;
+
+		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
+			PreparedStatement ps = conn.prepareStatement(ADD_READER);
+			ps.setInt(1, reader.getReaderTicketNumber());
+			ps.setString(2, reader.getFirstName());
+			ps.setString(3, reader.getLastName());
+			ps.setInt(4, reader.getPhoneNumber());
+			ps.setString(5, reader.getPassword());
+			result = ps.executeUpdate();
+			conn.close();
+
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
 	public void delete(int readerTicketNumber) {
 	}
-	
+
 	private Reader buildReader(ResultSet rs) throws SQLException {
 		Reader reader = new Reader();
 

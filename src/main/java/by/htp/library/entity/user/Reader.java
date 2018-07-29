@@ -11,7 +11,7 @@ public class Reader extends AbstractUser {
 		super();
 	}
 
-	public Reader(String password, int readerTicketNumber, String firstName, String lastName, int phoneNumber) {
+	public Reader(int readerTicketNumber, String firstName, String lastName, int phoneNumber, String password) {
 		super(password);
 		this.readerTicketNumber = readerTicketNumber;
 		this.firstName = firstName;
