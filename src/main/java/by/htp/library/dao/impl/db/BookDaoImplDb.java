@@ -20,6 +20,7 @@ public class BookDaoImplDb implements BookDao {
 	private static final String SELECT_BOOK_BYID = "SELECT * from book WHERE id = ?";
 	private static final String SELECT_BOOKS_LIST = "SELECT * FROM book";
 	private static final String ADD_BOOK = "INSERT INTO book (title, author) VALUES (?, ?)";
+	private static final String DELETE_BOOK_BYID = "DELETE FROM book WHERE id = ?";
 
 	@Override
 	public Book read(int id) {
@@ -55,14 +56,33 @@ public class BookDaoImplDb implements BookDao {
 
 	@Override
 	public int add(Book book) {
+		int result = 0;
 
-		return 0;
+		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
+			PreparedStatement ps = conn.prepareStatement(ADD_BOOK);
+			ps.setString(1, book.getTitle());
+			ps.setString(2, book.getAuthor());
+			result = ps.executeUpdate();
+			conn.close();
+
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
-	public void delete(int book_id) {
+	public void delete(int id) {
+		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
+			PreparedStatement ps = conn.prepareStatement(DELETE_BOOK_BYID);
+			ps.setInt(1, id);
+			ps.execute();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	private Book buildBook(ResultSet rs) throws SQLException {
 		Book book = new Book();
 		book.setId(rs.getInt("id"));

@@ -10,12 +10,6 @@ public class MainApp {
 
 	public static void main(String[] args) {
 		
-		BookDao bookDao = new BookDaoImplDb();
-		
-		List <Book> bookList = bookDao.list();
-		
-		System.out.println(bookList);
-		
 
 	}
 
