@@ -24,8 +24,20 @@ public class ReaderDaoImplDb implements ReaderDao {
 
 	@Override
 	public Reader read(int readerTicketNumber) {
+		Reader reader = null;
 
-		return null;
+		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
+			PreparedStatement ps = conn.prepareStatement(SELECT_READER_BYID);
+			ps.setInt(1, readerTicketNumber);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				reader = buildReader(rs);
+			}
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return reader;
 	}
 
 	@Override
@@ -60,7 +72,10 @@ public class ReaderDaoImplDb implements ReaderDao {
 
 	private Reader buildReader(ResultSet rs) throws SQLException {
 		Reader reader = new Reader();
-
+		reader.setReaderTicketNumber(rs.getInt("readerTicketNumber"));
+		reader.setFirstName(rs.getString("firstName"));
+		reader.setLastName(rs.getString("lastName"));
+		reader.setPhoneNumber(rs.getInt("phoneNumber"));
 		return reader;
 	}
 
