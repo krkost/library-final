@@ -11,24 +11,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import by.htp.library.ReaderDao;
+import by.htp.library.dao.ReaderDao;
 import by.htp.library.entity.Book;
 import by.htp.library.entity.user.Reader;
 
 public class ReaderDaoImplDb implements ReaderDao {
 
-	private static final String SELECT_READER_BYID = "SELECT * from reader WHERE readerTicketNumber = ?";
+	private static final String SELECT_READER_BYID = "SELECT * from reader WHERE id_reader = ?";
 	private static final String SELECT_READERS_LIST = "SELECT * FROM reader";
 	private static final String ADD_READER = "INSERT INTO reader (readerTicketNumber, firstName, lastName, phoneNumber, password) VALUES (?, ?, ?, ?, ?)";
-	private static final String DELETE_READER_BYID = "DELETE FROM reader WHERE readerTicketNumber = ?";
+	private static final String DELETE_READER_BYID = "DELETE FROM reader WHERE id_reader = ?";
 
 	@Override
-	public Reader read(int readerTicketNumber) {
+	public Reader read(int id) {
 		Reader reader = null;
 
 		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
 			PreparedStatement ps = conn.prepareStatement(SELECT_READER_BYID);
-			ps.setInt(1, readerTicketNumber);
+			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				reader = buildReader(rs);
@@ -67,7 +67,15 @@ public class ReaderDaoImplDb implements ReaderDao {
 	}
 
 	@Override
-	public void delete(int readerTicketNumber) {
+	public void delete(int id) {
+		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
+			PreparedStatement ps = conn.prepareStatement(DELETE_READER_BYID);
+			ps.setInt(1, id);
+			ps.execute();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private Reader buildReader(ResultSet rs) throws SQLException {

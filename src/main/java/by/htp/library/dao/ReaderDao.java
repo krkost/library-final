@@ -1,4 +1,4 @@
-package by.htp.library;
+package by.htp.library.dao;
 
 import java.util.List;
 
@@ -12,6 +12,6 @@ public interface ReaderDao {
 	
 	int add(Reader reader);
 	
-	void delete(int readerTicketNumber);
+	void delete(int id);
 
 }

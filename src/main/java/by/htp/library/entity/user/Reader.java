@@ -1,7 +1,8 @@
 package by.htp.library.entity.user;
 
 public class Reader extends AbstractUser {
-
+	
+	private int id;
 	private int readerTicketNumber;
 	private String firstName;
 	private String lastName;
@@ -9,6 +10,15 @@ public class Reader extends AbstractUser {
 
 	public Reader() {
 		super();
+	}
+	
+	public Reader(int id, int readerTicketNumber, String firstName, String lastName, int phoneNumber) {
+		super();
+		this.id = id;
+		this.readerTicketNumber = readerTicketNumber;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
 	}
 
 	public Reader(int readerTicketNumber, String firstName, String lastName, int phoneNumber, String password) {
@@ -25,6 +35,14 @@ public class Reader extends AbstractUser {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getReaderTicketNumber() {
@@ -64,9 +82,10 @@ public class Reader extends AbstractUser {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + id;
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + readerTicketNumber;
 		result = prime * result + phoneNumber;
+		result = prime * result + readerTicketNumber;
 		return result;
 	}
 
@@ -84,14 +103,16 @@ public class Reader extends AbstractUser {
 				return false;
 		} else if (!firstName.equals(other.firstName))
 			return false;
+		if (id != other.id)
+			return false;
 		if (lastName == null) {
 			if (other.lastName != null)
 				return false;
 		} else if (!lastName.equals(other.lastName))
 			return false;
-		if (readerTicketNumber != other.readerTicketNumber)
-			return false;
 		if (phoneNumber != other.phoneNumber)
+			return false;
+		if (readerTicketNumber != other.readerTicketNumber)
 			return false;
 		return true;
 	}

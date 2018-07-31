@@ -1,4 +1,4 @@
-package by.htp.library;
+package by.htp.library.dao;
 
 import java.util.List;
 

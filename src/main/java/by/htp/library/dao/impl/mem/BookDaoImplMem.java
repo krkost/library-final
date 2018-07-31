@@ -1,11 +1,11 @@
-package by.htp.library.dao.impl.col;
+package by.htp.library.dao.impl.mem;
 
 import java.util.List;
 
-import by.htp.library.BookDao;
+import by.htp.library.dao.BookDao;
 import by.htp.library.entity.Book;
 
-public class BookDaoImplCol implements BookDao{
+public class BookDaoImplMem implements BookDao{
 
 	@Override
 	public Book read(int id) {
