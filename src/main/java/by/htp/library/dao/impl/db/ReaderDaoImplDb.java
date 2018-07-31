@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 import by.htp.library.dao.ReaderDao;
@@ -25,7 +26,6 @@ public class ReaderDaoImplDb implements ReaderDao {
 	@Override
 	public Reader read(int id) {
 		Reader reader = null;
-
 		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
 			PreparedStatement ps = conn.prepareStatement(SELECT_READER_BYID);
 			ps.setInt(1, id);
@@ -42,8 +42,18 @@ public class ReaderDaoImplDb implements ReaderDao {
 
 	@Override
 	public List<Reader> list() {
+		List <Reader> readerList = new LinkedList();
+		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
+			PreparedStatement ps = conn.prepareStatement(SELECT_READERS_LIST);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				readerList.add(buildReader(rs));
+			}
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return readerList;
 
-		return null;
 	}
 
 	@Override

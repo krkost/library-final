@@ -1,5 +1,6 @@
 package by.htp.library.dao;
 
+import java.util.Calendar;
 import java.util.List;
 
 import by.htp.library.entity.ReaderBook;
@@ -13,6 +14,6 @@ public interface ReaderBookDao {
 
 	int add(ReaderBook readerBook);
 	
-	int update (ReaderBook readerBook);
+	int updateEndDate (int idReaderBook, Calendar endDate);
 
 }

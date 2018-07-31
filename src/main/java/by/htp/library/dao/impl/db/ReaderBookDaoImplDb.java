@@ -19,7 +19,7 @@ public class ReaderBookDaoImplDb implements ReaderBookDao {
 	private static final String SELECT_READERBOOK_BYID = "SELECT * from readerbook WHERE id_readerbook = ?";
 	private static final String SELECT_READERBOOK_LIST = "SELECT * FROM readerbook";
 	private static final String ADD_READERBOOK = "INSERT INTO readerbook (id_reader, id_book, startDate, endDate) VALUES (?, ?, ?, ?)";
-	private static final String UPDATE_READERBOOK = "";
+	private static final String UPDATE_READERBOOK = "UPDATE readerbook SET endDate=? WHERE id_readerbook=?";
 
 	@Override
 	public ReaderBook read(int id) {
@@ -36,7 +36,7 @@ public class ReaderBookDaoImplDb implements ReaderBookDao {
 	@Override
 	public int add(ReaderBook readerBook) {
 		int result = 0;
-		
+
 		java.sql.Date startDate = new java.sql.Date(readerBook.getStartDate().getTimeInMillis());
 
 		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
@@ -55,9 +55,23 @@ public class ReaderBookDaoImplDb implements ReaderBookDao {
 	}
 
 	@Override
-	public int update(ReaderBook readerBook) {
-		
-		return 0;
+	public int updateEndDate(int idReaderBook, Calendar date) {
+		int result = 0;
+
+		java.sql.Date endDate = new java.sql.Date(date.getTimeInMillis());
+
+		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
+			PreparedStatement ps = conn.prepareStatement(UPDATE_READERBOOK);
+			ps.setDate(1, endDate);
+			ps.setInt(2, idReaderBook);
+			result = ps.executeUpdate();
+			conn.close();
+
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+
+		return result;
 	}
 
 }
