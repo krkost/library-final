@@ -17,7 +17,7 @@ import by.htp.library.entity.Book;
 
 public class BookDaoImplDb implements BookDao {
 
-	private static final String SELECT_BOOK_BYID = "SELECT * from book WHERE id_book = ?";
+	private static final String SELECT_BOOK_BYID = "SELECT * FROM book WHERE id_book = ?";
 	private static final String SELECT_BOOKS_LIST = "SELECT * FROM book";
 	private static final String ADD_BOOK = "INSERT INTO book (title, author) VALUES (?, ?)";
 	private static final String DELETE_BOOK_BYID = "DELETE FROM book WHERE id_book = ?";

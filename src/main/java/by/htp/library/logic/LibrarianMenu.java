@@ -5,7 +5,7 @@ import by.htp.library.entity.user.Reader;
 
 public interface LibrarianMenu {
 	
-	void login(String login, String password);
+	boolean login(String login, String password);
 	
 	void addReader(Reader reader);
 	
