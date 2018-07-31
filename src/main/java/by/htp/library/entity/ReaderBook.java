@@ -33,6 +33,14 @@ public class ReaderBook {
 		this.startDate = startDate;
 		this.endDate = null;
 	}
+	
+	public ReaderBook(Reader reader, Book book, Calendar startDate) {
+		super();
+		this.reader = reader;
+		this.book = book;
+		this.startDate = startDate;
+		this.endDate = null;
+	}
 
 	public int getId() {
 		return id;

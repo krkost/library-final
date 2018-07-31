@@ -80,6 +80,7 @@ public class ReaderDaoImplDb implements ReaderDao {
 
 	private Reader buildReader(ResultSet rs) throws SQLException {
 		Reader reader = new Reader();
+		reader.setId(rs.getInt("id_reader"));
 		reader.setReaderTicketNumber(rs.getInt("readerTicketNumber"));
 		reader.setFirstName(rs.getString("firstName"));
 		reader.setLastName(rs.getString("lastName"));

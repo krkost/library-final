@@ -11,6 +11,8 @@ public interface ReaderBookDao {
 
 	List<ReaderBook> list();
 
-	int add(ReaderBook book);
+	int add(ReaderBook readerBook);
+	
+	int update (ReaderBook readerBook);
 
 }
