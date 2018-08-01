@@ -7,7 +7,7 @@ public interface StocktakingChecks {
 	
 	boolean checkCurrentBookIsNotTaken (int idBook);
 	
-	boolean checkCurrentReaderHasNotMoreThanLimitBooks(int idReader);
+	boolean checkCurrentReaderHasNoMoreThanLimitBooks(int idReader);
 	
 	boolean checkCurrentReaderHasNoBookIndebtedness(int idReader);
 

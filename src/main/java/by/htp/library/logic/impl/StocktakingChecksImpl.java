@@ -29,7 +29,7 @@ public class StocktakingChecksImpl implements StocktakingChecks {
 	}
 
 	@Override
-	public boolean checkCurrentReaderHasNotMoreThanLimitBooks(int idReader) {
+	public boolean checkCurrentReaderHasNoMoreThanLimitBooks(int idReader) {
 
 		ReaderBookDao rD = new ReaderBookDaoImplDb();
 		List<ReaderBook> readerBookList = rD.list();

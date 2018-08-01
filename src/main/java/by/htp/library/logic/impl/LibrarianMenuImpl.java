@@ -17,9 +17,10 @@ import by.htp.library.entity.Book;
 import by.htp.library.entity.ReaderBook;
 import by.htp.library.entity.user.Reader;
 import by.htp.library.logic.LibrarianMenu;
+import by.htp.library.logic.StocktakingChecks;
 
 public class LibrarianMenuImpl implements LibrarianMenu {
-	
+
 	private static final int EXIT_TO_MAIN_LIBRARIAN_MENU = 0;
 
 	@Override
@@ -144,29 +145,36 @@ public class LibrarianMenuImpl implements LibrarianMenu {
 	public void addRecordReaderTakesBook() {
 		UserInput userInput = new UserInputImpl();
 		ReaderBookDao rbD = new ReaderBookDaoImplDb();
+		StocktakingChecks stocktakingChecks = new StocktakingChecksImpl();
 		ReaderBook newReaderBook = new ReaderBook();
-		
+
 		System.out.println("View the list of readers, and then input reader id.");
 		showListOfReaders();
 		System.out.println("\nInput reader id:");
 		int idReader = userInput.inputInt();
-		
-		
-		newReaderBook.setIdReader(idReader);
-		
+
+		if (stocktakingChecks.checkCurrentReaderHasNoMoreThanLimitBooks(idReader)
+				&& stocktakingChecks.checkCurrentReaderHasNoBookIndebtedness(idReader)) {
+			newReaderBook.setIdReader(idReader);
+		} else {
+			System.out.println("Selected reader has book limit or book indebtedness. You can select another reader");
+			addRecordReaderTakesBook();
+		}
+
 		System.out.println("View the list of books, and then input book id.");
 		showListOfBooks();
 		System.out.println("\nInput book id:");
 		int idBook = userInput.inputInt();
-		
-		
-		newReaderBook.setIdBook(idBook);
-		
-		
+
+		if (stocktakingChecks.checkCurrentBookIsNotTaken(idBook)) {
+			newReaderBook.setIdBook(idBook);
+		} else {
+			System.out.println("Selected book is taken now. Please, start again");
+			addRecordReaderTakesBook();
+		}
 		newReaderBook.setStartDate(new GregorianCalendar());
-		
 		rbD.add(newReaderBook);
-		
+
 		System.out.println("Reader-Book record is added");
 	}
 
@@ -180,7 +188,8 @@ public class LibrarianMenuImpl implements LibrarianMenu {
 			showRecordsReaderBook();
 
 			System.out.println("If you want to back to the main menu, input " + EXIT_TO_MAIN_LIBRARIAN_MENU);
-			System.out.println("Record will be updated with current date. Input id of updating record or " + EXIT_TO_MAIN_LIBRARIAN_MENU);
+			System.out.println("Record will be updated with current date. Input id of updating record or "
+					+ EXIT_TO_MAIN_LIBRARIAN_MENU);
 			int id = userInput.inputInt();
 			if (id == EXIT_TO_MAIN_LIBRARIAN_MENU) {
 				menuCycle();
