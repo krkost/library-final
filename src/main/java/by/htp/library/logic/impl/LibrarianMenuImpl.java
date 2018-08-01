@@ -1,17 +1,24 @@
 package by.htp.library.logic.impl;
 
+import by.htp.library.dao.LibrarianDao;
+import by.htp.library.dao.UserInput;
+import by.htp.library.dao.impl.UserInputImpl;
+import by.htp.library.dao.impl.db.LibrarianDaoImplDb;
 import by.htp.library.entity.Book;
 import by.htp.library.entity.user.Reader;
 import by.htp.library.logic.LibrarianMenu;
 
 public class LibrarianMenuImpl implements LibrarianMenu {
-
+	
+	@Override
 	public void start() {
+		UserInput userInput = new UserInputImpl();
+
 		System.out.println("Input login:");
-		String login = "";
+		String login = userInput.inputString();
 
 		System.out.println("Input password:");
-		String password = "";
+		String password = userInput.inputString();
 
 		if (login(login, password)) {
 
@@ -21,7 +28,9 @@ public class LibrarianMenuImpl implements LibrarianMenu {
 
 	@Override
 	public boolean login(String login, String password) {
-
+		LibrarianDao librarian = new LibrarianDaoImplDb();
+		if (login.equals(librarian.getLibrarianLogin()) && password.equals(librarian.getLibrarianPassword()))
+			return true;
 		return false;
 	}
 
