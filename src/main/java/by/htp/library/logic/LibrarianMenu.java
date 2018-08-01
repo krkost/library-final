@@ -1,28 +1,25 @@
 package by.htp.library.logic;
 
-import by.htp.library.entity.Book;
-import by.htp.library.entity.user.Reader;
-
 public interface LibrarianMenu {
 	
 	void start();
 	
-	boolean login(String login, String password);
-	
-	void addReader(Reader reader);
+	void addReader();
 	
 	void showListOfReaders();
 	
-	void deleteReader(Reader reader);
+	void deleteReader();
 	
-	void addBook(Book book);
+	void addBook();
 	
 	void showListOfBooks();
 	
-	void deleteBook(Book book);
+	void deleteBook();
 	
-	void addRecordReaderTakesBook(Reader reader, Book book);
+	void addRecordReaderTakesBook();
 	
-	void updRecordReaderReturnsBook(Reader reader, Book book);
+	void updRecordReaderReturnsBook();
+	
+	void getReports();
 
 }
