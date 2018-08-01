@@ -59,17 +59,30 @@ public class LibrarianMenuImpl implements LibrarianMenu {
 
 		System.out.println("Input password for reader:");
 		newReader.setPassword(userInput.inputString());
-		
+
 		ReaderDao rD = new ReaderDaoImplDb();
 		rD.add(newReader);
+		
+		System.out.println("New reader is added");
 	}
 
 	@Override
 	public void showListOfReaders() {
+		ReaderDao rD = new ReaderDaoImplDb();
+		System.out.println(rD.list());
 	}
 
 	@Override
 	public void deleteReader() {
+		UserInput userInput = new UserInputImpl();
+		ReaderDao rD = new ReaderDaoImplDb();
+		
+		System.out.println("View the list of users and input id of reader.");
+		showListOfReaders();
+		System.out.println("Input id:");
+		rD.delete(userInput.inputInt());
+		
+		System.out.println("Reader is deleted");
 	}
 
 	@Override

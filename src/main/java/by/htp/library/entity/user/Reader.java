@@ -119,7 +119,7 @@ public class Reader extends AbstractUser {
 
 	@Override
 	public String toString() {
-		return "Reader [id=" + id + ", readerTicketNumber=" + readerTicketNumber + ", firstName=" + firstName
+		return "\nReader [id=" + id + ", readerTicketNumber=" + readerTicketNumber + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + "]";
 	}
 

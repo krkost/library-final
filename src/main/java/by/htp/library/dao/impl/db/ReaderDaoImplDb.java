@@ -53,7 +53,6 @@ public class ReaderDaoImplDb implements ReaderDao {
 			se.printStackTrace();
 		}
 		return readerList;
-
 	}
 
 	@Override

@@ -7,8 +7,8 @@ import by.htp.library.entity.user.Reader;
 public class ReaderBook {
 
 	private int id;
-	private Reader reader;
-	private Book book;
+	private int idReader;
+	private int idBook;
 	private Calendar startDate;
 	private Calendar endDate;
 
@@ -16,28 +16,28 @@ public class ReaderBook {
 		super();
 	}
 
-	public ReaderBook(int id, Reader reader, Book book, Calendar startDate, Calendar endDate) {
+	public ReaderBook(int id, int idReader, int idBook, Calendar startDate, Calendar endDate) {
 		super();
 		this.id = id;
-		this.reader = reader;
-		this.book = book;
+		this.idReader = idReader;
+		this.idBook = idBook;
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
 
-	public ReaderBook(int id, Reader reader, Book book, Calendar startDate) {
+	public ReaderBook(int id, int idReader, int idBook, Calendar startDate) {
 		super();
 		this.id = id;
-		this.reader = reader;
-		this.book = book;
+		this.idReader = idReader;
+		this.idBook = idBook;
 		this.startDate = startDate;
 		this.endDate = null;
 	}
-	
-	public ReaderBook(Reader reader, Book book, Calendar startDate) {
+
+	public ReaderBook(int idReader, int idBook, Calendar startDate) {
 		super();
-		this.reader = reader;
-		this.book = book;
+		this.idReader = idReader;
+		this.idBook = idBook;
 		this.startDate = startDate;
 		this.endDate = null;
 	}
@@ -50,20 +50,20 @@ public class ReaderBook {
 		this.id = id;
 	}
 
-	public Reader getReader() {
-		return reader;
+	public int getIdReader() {
+		return idReader;
 	}
 
-	public void setReader(Reader reader) {
-		this.reader = reader;
+	public void setIdReader(int idReader) {
+		this.idReader = idReader;
 	}
 
-	public Book getBook() {
-		return book;
+	public int getIdBook() {
+		return idBook;
 	}
 
-	public void setBook(Book book) {
-		this.book = book;
+	public void setIdBook(int idBook) {
+		this.idBook = idBook;
 	}
 
 	public Calendar getStartDate() {
@@ -86,10 +86,10 @@ public class ReaderBook {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((book == null) ? 0 : book.hashCode());
 		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((reader == null) ? 0 : reader.hashCode());
+		result = prime * result + idBook;
+		result = prime * result + idReader;
 		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
 		return result;
 	}
@@ -103,11 +103,6 @@ public class ReaderBook {
 		if (getClass() != obj.getClass())
 			return false;
 		ReaderBook other = (ReaderBook) obj;
-		if (book == null) {
-			if (other.book != null)
-				return false;
-		} else if (!book.equals(other.book))
-			return false;
 		if (endDate == null) {
 			if (other.endDate != null)
 				return false;
@@ -115,10 +110,9 @@ public class ReaderBook {
 			return false;
 		if (id != other.id)
 			return false;
-		if (reader == null) {
-			if (other.reader != null)
-				return false;
-		} else if (!reader.equals(other.reader))
+		if (idBook != other.idBook)
+			return false;
+		if (idReader != other.idReader)
 			return false;
 		if (startDate == null) {
 			if (other.startDate != null)
@@ -130,8 +124,27 @@ public class ReaderBook {
 
 	@Override
 	public String toString() {
-		return "ReaderBook [id=" + id + ", reader=" + reader + ", book=" + book + ", startDate=" + startDate
-				+ ", endDate=" + endDate + "]";
+		return "\nReaderBook [id=" + id + ", idReader=" + idReader + ", idBook=" + idBook + ", startDate="
+				+ normalDate(startDate) + ", endDate=" + normalDate(endDate) + "]";
+	}
+
+	private String normalDate(Calendar cal) {
+		int currentYear = 2018;
+		int bottomLineYear = 1900;
+		String normalDate = null;
+
+		if (cal.get(Calendar.YEAR) < bottomLineYear || cal.get(Calendar.YEAR) > currentYear) {
+			normalDate = null;
+		} else {
+			int year = cal.get(Calendar.YEAR);
+			int month = cal.get(Calendar.MONTH);
+			month++; // because of months starts with 0
+			int day = cal.get(Calendar.DAY_OF_MONTH);
+
+			normalDate = year + "-" + month + "-" + day;
+		}
+
+		return normalDate;
 	}
 
 }
