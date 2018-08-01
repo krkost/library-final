@@ -129,21 +129,19 @@ public class ReaderBook {
 	}
 
 	private String normalDate(Calendar cal) {
-		int currentYear = 2018;
-		int bottomLineYear = 1900;
+		
 		String normalDate = null;
 
-		if (cal.get(Calendar.YEAR) < bottomLineYear || cal.get(Calendar.YEAR) > currentYear) {
-			normalDate = null;
+		if (cal == null) {
+			return normalDate;
 		} else {
 			int year = cal.get(Calendar.YEAR);
 			int month = cal.get(Calendar.MONTH);
-			month++; // because of months starts with 0
+			month++; // because of months start with 0
 			int day = cal.get(Calendar.DAY_OF_MONTH);
 
 			normalDate = year + "-" + month + "-" + day;
 		}
-
 		return normalDate;
 	}
 

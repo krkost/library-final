@@ -14,10 +14,13 @@ import by.htp.library.dao.impl.db.LibrarianDaoImplDb;
 import by.htp.library.dao.impl.db.ReaderBookDaoImplDb;
 import by.htp.library.dao.impl.db.ReaderDaoImplDb;
 import by.htp.library.entity.Book;
+import by.htp.library.entity.ReaderBook;
 import by.htp.library.entity.user.Reader;
 import by.htp.library.logic.LibrarianMenu;
 
 public class LibrarianMenuImpl implements LibrarianMenu {
+	
+	private static final int EXIT_TO_MAIN_LIBRARIAN_MENU = 0;
 
 	@Override
 	public void start() {
@@ -52,6 +55,8 @@ public class LibrarianMenuImpl implements LibrarianMenu {
 		UserInput userInput = new UserInputImpl();
 		Reader newReader = new Reader();
 
+		int passwordMinSize = 6;
+
 		System.out.println("Input reader ticket number:");
 		newReader.setReaderTicketNumber(userInput.inputInt());
 
@@ -65,11 +70,18 @@ public class LibrarianMenuImpl implements LibrarianMenu {
 		newReader.setPhoneNumber(userInput.inputInt());
 
 		System.out.println("Input password for reader:");
-		newReader.setPassword(userInput.inputString());
-
+		String password = userInput.inputString();
+		if (password.length() < passwordMinSize) {
+			while (true) {
+				System.out.println("Password size must be at least 6 characters. Input password again:");
+				password = userInput.inputString();
+				if (password.length() >= passwordMinSize)
+					break;
+			}
+		}
+		newReader.setPassword(password);
 		ReaderDao rD = new ReaderDaoImplDb();
 		rD.add(newReader);
-
 		System.out.println("New reader is added");
 	}
 
@@ -130,6 +142,32 @@ public class LibrarianMenuImpl implements LibrarianMenu {
 
 	@Override
 	public void addRecordReaderTakesBook() {
+		UserInput userInput = new UserInputImpl();
+		ReaderBookDao rbD = new ReaderBookDaoImplDb();
+		ReaderBook newReaderBook = new ReaderBook();
+		
+		System.out.println("View the list of readers, and then input reader id.");
+		showListOfReaders();
+		System.out.println("\nInput reader id:");
+		int idReader = userInput.inputInt();
+		
+		
+		newReaderBook.setIdReader(idReader);
+		
+		System.out.println("View the list of books, and then input book id.");
+		showListOfBooks();
+		System.out.println("\nInput book id:");
+		int idBook = userInput.inputInt();
+		
+		
+		newReaderBook.setIdBook(idBook);
+		
+		
+		newReaderBook.setStartDate(new GregorianCalendar());
+		
+		rbD.add(newReaderBook);
+		
+		System.out.println("Reader-Book record is added");
 	}
 
 	@Override
@@ -140,11 +178,11 @@ public class LibrarianMenuImpl implements LibrarianMenu {
 		while (true) {
 			System.out.println("View the list of records:");
 			showRecordsReaderBook();
-			
-			System.out.println("If you want back to the main menu input 000");
-			System.out.println("Record will be updated with current date. Input id of updating record or 000:");
+
+			System.out.println("If you want to back to the main menu, input " + EXIT_TO_MAIN_LIBRARIAN_MENU);
+			System.out.println("Record will be updated with current date. Input id of updating record or " + EXIT_TO_MAIN_LIBRARIAN_MENU);
 			int id = userInput.inputInt();
-			if(id == 000) {
+			if (id == EXIT_TO_MAIN_LIBRARIAN_MENU) {
 				menuCycle();
 			}
 			if (rbD.read(id).getEndDate() != null) {
@@ -155,7 +193,6 @@ public class LibrarianMenuImpl implements LibrarianMenu {
 				System.out.println("Record is updated");
 			}
 		}
-
 	}
 
 	private void showRecordsReaderBook() {
@@ -169,7 +206,7 @@ public class LibrarianMenuImpl implements LibrarianMenu {
 
 	private void menuCycle() {
 		while (true) {
-			System.out.println("LIBRARIAN MENU:");
+			System.out.println("\n---LIBRARIAN MENU---");
 			System.out.println("1 - Add new reader\n2 - View list of readers\n3 - Delete reader\n4 - Add new book"
 					+ "\n5 - View list of books\n6 - Delete book\n7 - Add reader-book record\n8 - Update reader-book record"
 					+ "\n9 - Get reports\n0 - Exit");
@@ -213,6 +250,8 @@ public class LibrarianMenuImpl implements LibrarianMenu {
 					System.exit(0);
 				}
 				break;
+			default:
+				System.out.println("\nInput correct number, please.");
 			}
 		}
 	}

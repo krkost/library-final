@@ -97,21 +97,19 @@ public class ReaderBookDaoImplDb implements ReaderBookDao {
 	}
 
 	private ReaderBook buildReaderBook(ResultSet rs) throws SQLException {
-
+		
+		ReaderBook readerBook = new ReaderBook();
 		Calendar startDate = GregorianCalendar.getInstance();
 		startDate.setTime(rs.getDate("startDate"));
 		Calendar endDate = GregorianCalendar.getInstance();
 		if (rs.getDate("endDate") != null) {
 			endDate.setTime(rs.getDate("endDate"));
-		} else {
-			endDate.set(0, 0, 0);
+			readerBook.setEndDate(endDate);
 		}
-		ReaderBook readerBook = new ReaderBook();
 		readerBook.setId(rs.getInt("id_readerbook"));
 		readerBook.setIdReader(rs.getInt("id_reader"));
 		readerBook.setIdBook(rs.getInt("id_book"));
 		readerBook.setStartDate(startDate);
-		readerBook.setEndDate(endDate);
 
 		return readerBook;
 	}
