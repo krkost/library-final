@@ -8,7 +8,9 @@ public interface ReaderDao {
 	
 	boolean login(int readerTicketNumber, String password);
 	
-	Reader read(int readerTicketNumber);
+	Reader read(int id);
+	
+	Reader readByTicketNumber(int readerTicketNumber);	
 	
 	List <Reader> list();
 	

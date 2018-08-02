@@ -6,7 +6,9 @@ import by.htp.library.dao.UserInput;
 import by.htp.library.dao.impl.UserInputImpl;
 import by.htp.library.dao.impl.db.BookDaoImplDb;
 import by.htp.library.dao.impl.db.ReaderDaoImplDb;
+import by.htp.library.entity.user.Reader;
 import by.htp.library.logic.ReaderMenu;
+import by.htp.library.logic.StocktakingChecks;
 
 public class ReaderMenuImpl implements ReaderMenu {
 
@@ -31,8 +33,18 @@ public class ReaderMenuImpl implements ReaderMenu {
 		String password = userInput.inputString();
 
 		ReaderDao rD = new ReaderDaoImplDb();
+		Reader reader = new Reader();
+		reader = rD.readByTicketNumber(readerTicketNumber);
 
-		return rD.login(readerTicketNumber, password);
+		boolean login = rD.login(readerTicketNumber, password);
+
+		if (login) {
+			StocktakingChecks checkReaderHasNoDebt = new StocktakingChecksImpl();
+			if (checkReaderHasNoDebt.checkCurrentReaderHasNoBookIndebtedness(reader.getId()) == false)
+				System.out.println("You have book indebtedness. Do something with it!");
+		}
+
+		return login;
 	}
 
 	@Override
@@ -45,7 +57,7 @@ public class ReaderMenuImpl implements ReaderMenu {
 	public void showBookInfo() {
 		UserInput userInput = new UserInputImpl();
 		BookDao bD = new BookDaoImplDb();
-		
+
 		System.out.println("Input book id:");
 		System.out.println(bD.read(userInput.inputInt()));
 	}

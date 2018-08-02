@@ -19,6 +19,7 @@ public class ReaderDaoImplDb implements ReaderDao {
 
 	private static final String CHECK_READER_CREDENTIALS = "SELECT * FROM reader WHERE readerTicketNumber=? AND password=?";
 	private static final String SELECT_READER_BYID = "SELECT * from reader WHERE id_reader = ?";
+	private static final String SELECT_READER_BY_TICKET_NUMBER = "SELECT * from reader WHERE readerTicketNumber = ?";
 	private static final String SELECT_READERS_LIST = "SELECT * FROM reader";
 	private static final String ADD_READER = "INSERT INTO reader (readerTicketNumber, firstName, lastName, phoneNumber, password) VALUES (?, ?, ?, ?, ?)";
 	private static final String DELETE_READER_BYID = "DELETE FROM reader WHERE id_reader = ?";
@@ -50,6 +51,23 @@ public class ReaderDaoImplDb implements ReaderDao {
 		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
 			PreparedStatement ps = conn.prepareStatement(SELECT_READER_BYID);
 			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				reader = buildReader(rs);
+			}
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return reader;
+	}
+	
+	@Override
+	public Reader readByTicketNumber(int readerTicketNumber) {
+		Reader reader = null;
+		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
+			PreparedStatement ps = conn.prepareStatement(SELECT_READER_BY_TICKET_NUMBER);
+			ps.setInt(1, readerTicketNumber);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				reader = buildReader(rs);
