@@ -23,7 +23,7 @@ public class ReaderBookDaoImplDb implements ReaderBookDao {
 	private static final String SELECT_READERBOOK_LIST = "SELECT * FROM readerbook";
 	private static final String ADD_READERBOOK = "INSERT INTO readerbook (id_reader, id_book, startDate, endDate) VALUES (?, ?, ?, ?)";
 	private static final String UPDATE_READERBOOK = "UPDATE readerbook SET endDate=? WHERE id_readerbook=?";
-
+	
 	@Override
 	public ReaderBook read(int id) {
 		ReaderBook readerBook = null;

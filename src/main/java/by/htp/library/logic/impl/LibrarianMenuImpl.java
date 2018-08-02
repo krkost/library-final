@@ -29,9 +29,7 @@ public class LibrarianMenuImpl implements LibrarianMenu {
 			menuCycle();
 		} else {
 			System.out.println("Your login and/or password incorrect. Try again:");
-			if (login()) {
-				menuCycle();
-			}
+			start();
 		}
 	}
 

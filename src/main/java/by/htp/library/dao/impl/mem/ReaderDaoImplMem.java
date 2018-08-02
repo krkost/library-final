@@ -8,6 +8,12 @@ import by.htp.library.entity.user.Reader;
 public class ReaderDaoImplMem implements ReaderDao{
 
 	@Override
+	public boolean login(int readerTicketNumber, String password) {
+		
+		return false;
+	}
+
+	@Override
 	public Reader read(int readerTicketNumber) {
 		
 		return null;
@@ -26,7 +32,7 @@ public class ReaderDaoImplMem implements ReaderDao{
 	}
 
 	@Override
-	public void delete(int readerTicketNumber) {
+	public void delete(int id) {
 	}
 
 }

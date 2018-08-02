@@ -6,6 +6,8 @@ import by.htp.library.entity.user.Reader;
 
 public interface ReaderDao {
 	
+	boolean login(int readerTicketNumber, String password);
+	
 	Reader read(int readerTicketNumber);
 	
 	List <Reader> list();
