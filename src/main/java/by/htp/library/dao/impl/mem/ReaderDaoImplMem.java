@@ -14,7 +14,13 @@ public class ReaderDaoImplMem implements ReaderDao{
 	}
 
 	@Override
-	public Reader read(int readerTicketNumber) {
+	public Reader read(int id) {
+		
+		return null;
+	}
+
+	@Override
+	public Reader readByTicketNumber(int readerTicketNumber) {
 		
 		return null;
 	}

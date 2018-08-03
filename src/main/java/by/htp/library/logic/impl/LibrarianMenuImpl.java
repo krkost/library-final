@@ -17,6 +17,7 @@ import by.htp.library.entity.Book;
 import by.htp.library.entity.ReaderBook;
 import by.htp.library.entity.user.Reader;
 import by.htp.library.logic.LibrarianMenu;
+import by.htp.library.logic.ReportBase;
 import by.htp.library.logic.StocktakingChecks;
 
 public class LibrarianMenuImpl implements LibrarianMenu {
@@ -209,6 +210,27 @@ public class LibrarianMenuImpl implements LibrarianMenu {
 
 	@Override
 	public void getReports() {
+		UserInput userInput = new UserInputImpl();
+		ReportBase reports = new ReportGeneration();
+		
+		System.out.println("Select type of report:");
+		System.out.println("1 - Readers with indebtedness \n2 - Count of read times for books \n3 - Readers read books predefined amount");
+		
+		int option = userInput.inputInt();
+
+		switch (option) {
+		case 1:
+			reports.readersWithIndebtedness();
+			break;
+		case 2:
+			reports.booksCountRead();
+			break;
+		case 3:
+			reports.readersReadAmountBooks();
+			break;
+		default:
+			System.out.println("\nInput correct number, please.");
+		}
 	}
 
 	private void menuCycle() {

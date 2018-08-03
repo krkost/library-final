@@ -13,11 +13,12 @@ public class StocktakingChecksImpl implements StocktakingChecks {
 
 	private static final long DAYS_FOR_INDEBTEDNESS = 30;
 	private static final int LIMIT_OF_BOOKS = 3;
+	
+	ReaderBookDao rD = new ReaderBookDaoImplDb();
 
 	@Override
 	public boolean checkCurrentBookIsNotTaken(int idBook) {
 
-		ReaderBookDao rD = new ReaderBookDaoImplDb();
 		List<ReaderBook> readerBookList = rD.list();
 		for (ReaderBook readerBook : readerBookList) {
 			if (idBook == readerBook.getIdBook()) {
@@ -31,7 +32,6 @@ public class StocktakingChecksImpl implements StocktakingChecks {
 	@Override
 	public boolean checkCurrentReaderHasNoMoreThanLimitBooks(int idReader) {
 
-		ReaderBookDao rD = new ReaderBookDaoImplDb();
 		List<ReaderBook> readerBookList = rD.list();
 		int countOfReaderBooks = 0;
 		for (ReaderBook readerBook : readerBookList) {
@@ -48,7 +48,7 @@ public class StocktakingChecksImpl implements StocktakingChecks {
 
 	@Override
 	public boolean checkCurrentReaderHasNoBookIndebtedness(int idReader) {
-		ReaderBookDao rD = new ReaderBookDaoImplDb();
+
 		List<ReaderBook> readerBookList = rD.list();
 		for (ReaderBook readerBook : readerBookList) {
 			if (idReader == readerBook.getIdReader()) {
